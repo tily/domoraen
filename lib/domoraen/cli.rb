@@ -7,6 +7,45 @@ require 'json'
 
 class Domoraen::Cli < Thor
 	option :save, type: :boolean
+	desc 'classic', 'scrape classic tools and update database'
+	def classic
+		tools = []
+		%w|ひみつ道具一覧_(あ-そ) ひみつ道具一覧_(た-わ)|.each do |page|
+			url = URI.escape("http://ja.wikipedia.org/wiki/#{page}")
+			xpath1 = '//*[@id="mw-content-text"]/ul/li/a/text()'
+			xpath2 = '//*[@id="mw-content-text"]/ul/li/text()'
+			doc = Nokogiri::HTML(open(url).read)
+			tools1 = doc.xpath(xpath1).map {|x| x.to_s }
+			tools2 = doc.xpath(xpath2).map do |x|
+				x.to_s.gsub(/(（.+|→|⇒|\s)/) {''}
+			end
+			tools2 = tools2.reject {|x| x == '' || x == 'ー' || x[/^[\(\)（）]/] }
+			tools += tools1
+			tools += tools2
+		end
+		if options[:save]
+			db = domoraen.markov.read_db('classic') rescue {}
+			db.update("originals" => tools)
+			domoraen.markov.write_db('classic', db)
+		end
+		puts tools
+	end
+
+	option :save, type: :boolean
+	desc 'tools', 'scrape tools and update database'
+	def tools
+		url = URI.escape("http://ja.doraemon.wikia.com/wiki/道具一覧")
+		xpath = '//*[@id="mw-content-text"]/ul/li/a/text()'
+		doc = Nokogiri::HTML(open(url).read)
+		tools = doc.xpath(xpath).map {|x| x.to_s.gsub(/（道具）/) {''} }
+		if options[:save]
+			db = domoraen.markov.read_db('tools') rescue {}
+			db.update("originals" => tools)
+			domoraen.markov.write_db('tools', db)
+		end
+		puts tools
+	end
+
 	desc 'hatsumei', 'scrape hatsumei and add new items to database'
 	def hatsumei
 		db = domoraen.markov.read_db('hatsumei') rescue {'originals' => []}
