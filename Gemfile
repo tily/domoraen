@@ -14,3 +14,5 @@ group :development do
 end
 
 gem "mecab", "0.98"
+gem "chatterbot"
+gem "thor"
