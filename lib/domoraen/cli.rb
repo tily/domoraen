@@ -87,6 +87,11 @@ class Domoraen::Cli < Thor
 		puts domoraen.markov.generate
 	end
 
+	desc 'console', 'start console'
+	def console
+		# not implemented yet
+	end
+
 	no_commands do
 		def domoraen
 			@domoraen ||= Domoraen::Bot.new(config_file: File.dirname(__FILE__) + '/../../conf/domoraen.yaml')
