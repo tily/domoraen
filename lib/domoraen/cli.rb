@@ -82,10 +82,22 @@ class Domoraen::Cli < Thor
 	end
 
 	option :target, required: true
+	option :tweet, type: :boolean
+	option :for, type: :string
 	desc 'markov', 'generate markov sentence using database'
 	def markov
 		domoraen.markov.load_chains(options[:target])
-		puts domoraen.markov.generate
+		if options[:for]
+			tool = domoraen.produce_tool_for(options[:for])
+		else
+			tool = domoraen.produce_tool
+		end
+		if tool
+			puts tool
+			domoraen.tweet(tool) if options[:tweet]
+		else
+			puts 'unable to produce tool'
+		end
 	end
 
 	desc 'console', 'start console'
