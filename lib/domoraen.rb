@@ -23,24 +23,29 @@ class Domoraen
 			loop do
 				@domoraen.log 'loop start'
 				begin
-					if text = @domoraen.produce_tool
-						@domoraen.tweet(text)
+					if rand(10) == 1
+						@domoraen.log 'tweeting'
+						if text = @domoraen.produce_tool
+							@domoraen.tweet(text)
+						end
 					end
 
-					@domoraen.replies.each do |tweet|
-						text = @domoraen.react_to(tweet)
-						@domoraen.reply(text, tweet)
+					if rand(2) == 1
+						@domoraen.replies.each do |tweet|
+							text = @domoraen.react_to(tweet)
+							@domoraen.reply("#{@domoraen.tweet_user(tweet)} #{text}", tweet)
+						end
 					end
 
 					@domoraen.update_config
-				rescue StandardError => e
+				rescue Exception => e
 					@domoraen.log e
-					@domoraen.tweet "#{e.class}: #{e.message}"
+					@domoraen.tweet "@tily #{e.class}: #{e.message}"
 					next
 				end
 
 				@domoraen.log 'loop end'
-				#sleep 10
+				sleep 60
 			end
 		end
 	end
