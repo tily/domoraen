@@ -97,6 +97,5 @@ class Domoraen::Cli < Thor
 		def domoraen
 			@domoraen ||= Domoraen::Bot.new(config_file: File.dirname(__FILE__) + '/../../conf/domoraen.yaml')
 		end
-
 	end
 end
