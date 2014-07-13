@@ -4,33 +4,43 @@ require 'openssl'
 OpenSSL::SSL::VERIFY_PEER = OpenSSL::SSL::VERIFY_NONE
 
 class Domoraen
-	VERSION = File.read File.join File.dirname(__FILE__), '../VERSION'
+	SLEEP = 60
+	VERSION = File.read(File.join File.dirname(__FILE__), '../VERSION').chomp
 
 	@env = ENV['DOMORAEN_ENV'] || 'test'
 
 	class << self
 		attr_accessor :env
-	end
 
-	def self.start
-		@domoraen = Domoraen::Bot.new(
-			config_file: File.dirname(__FILE__) + '/../conf/domoraen.yaml'
-		)
-		# TODO: update profile with current version
+		def start
+			@domoraen = Domoraen::Bot.new(
+				config_file: File.dirname(__FILE__) + "/../conf/#{Domoraen.env}.yaml"
+			)
+			@domoraen.markov.load_chains('hatsumei')
+			@domoraen.update_profile
 
-		loop do
-			if text = @domoraen.produce_tool
-				@domoraen.status(text)
+			loop do
+				puts 'loop start'
+				begin
+					if text = @domoraen.produce_tool
+						@domoraen.tweet(text)
+					end
+
+					@domoraen.replies.each do |tweet|
+						text = @domoraen.react_to(tweet)
+						@domoraen.reply(text, tweet)
+					end
+
+					@domoraen.update_config
+				rescue StandardError => e
+					p e
+					@domoraen.tweet "#{e.class}: #{e.message}"
+					next
+				end
+
+				puts 'loop end'
+				#sleep 10
 			end
-
-			@domoraen.replies.each do |tweet|
-				text = @domoraen.react_to(tweet)
-				@domoraen.reply(text, tweet)
-			end
-
-			@domoraen.update_config
-
-			sleep SLEEP
 		end
 	end
 end
