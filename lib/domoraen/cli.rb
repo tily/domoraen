@@ -90,12 +90,12 @@ class Domoraen::Cli < Thor
 
 	desc 'console', 'start console'
 	def console
-		Earthquake.start(dir: File.dirname(__FILE__) + '/../../conf/earthquake/')
+		Earthquake.start(dir: File.dirname(__FILE__) + "/../../conf/#{Domoraen.env}/earthquake/")
 	end
 
 	no_commands do
 		def domoraen
-			@domoraen ||= Domoraen::Bot.new(config_file: File.dirname(__FILE__) + '/../../conf/domoraen.yaml')
+			@domoraen ||= Domoraen::Bot.new(config_file: File.dirname(__FILE__) + "/../../conf/#{Domoraen.env}.yaml")
 		end
 	end
 end
