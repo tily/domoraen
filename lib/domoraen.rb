@@ -18,9 +18,10 @@ class Domoraen
 			)
 			@domoraen.markov.load_chains('hatsumei')
 			@domoraen.update_profile
+			@domoraen.log 'starting'
 
 			loop do
-				puts 'loop start'
+				@domoraen.log 'loop start'
 				begin
 					if text = @domoraen.produce_tool
 						@domoraen.tweet(text)
@@ -33,12 +34,12 @@ class Domoraen
 
 					@domoraen.update_config
 				rescue StandardError => e
-					p e
+					@domoraen.log e
 					@domoraen.tweet "#{e.class}: #{e.message}"
 					next
 				end
 
-				puts 'loop end'
+				@domoraen.log 'loop end'
 				#sleep 10
 			end
 		end
