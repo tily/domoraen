@@ -1,0 +1,23 @@
+#!ruby
+# coding:utf-8
+File.join(File.dirname(__FILE__), '..', 'lib').tap {|x| $:.unshift(x) unless $:.include?(x) }
+require 'daemon_spawn'
+require 'domoraen'
+
+class DomoraenAgent < DaemonSpawn::Base
+
+  def start(args)
+	Domoraen.start
+  end
+
+  def stop
+    # stop your bad self
+  end
+end
+
+DomoraenAgent.spawn!(
+	log_file: "log/#{Domoraen.env}.log",
+	pid_file: "run/#{Domoraen.env}.pid",
+	sync_log: true,
+	working_dir: File.dirname(__FILE__) + "/../"
+)
