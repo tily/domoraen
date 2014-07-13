@@ -15,7 +15,7 @@ module Domoraen::Producer
 	def produce_tool_for(text)
 		words = function_words(text)
 		tools = words.map {|word| @markov.generate(word) }.compact
-		return NOES.sample if tools.empty?
+		return NOES.sample if tools.empty? || tools.nil?
 		prefix + tools.sample + suffix
 	end
 
