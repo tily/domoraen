@@ -1,6 +1,8 @@
 # coding:utf-8
 
 class Domoraen
+	VERSION = File.read File.join File.dirname(__FILE__), '../VERSION'
+
 	@env = ENV['DOMORAEN_ENV'] || 'test'
 
 	class << self
