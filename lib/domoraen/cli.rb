@@ -4,6 +4,7 @@ require 'uri'
 require 'nokogiri'
 require 'open-uri'
 require 'json'
+require 'earthquake'
 
 class Domoraen::Cli < Thor
 	option :save, type: :boolean
@@ -89,7 +90,7 @@ class Domoraen::Cli < Thor
 
 	desc 'console', 'start console'
 	def console
-		# not implemented yet
+		Earthquake.start(dir: File.dirname(__FILE__) + '/../../conf/earthquake/')
 	end
 
 	no_commands do
