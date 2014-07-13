@@ -46,8 +46,6 @@ class Domoraen
 end
 
 require 'chatterbot'
-#require 'domoraen/config'
-#require 'domoraen/logger'
 require 'domoraen/producer'
 require 'domoraen/messenger'
 require 'domoraen/markov'
