@@ -1,5 +1,6 @@
 # coding:utf-8
 
+require 'json'
 require 'openssl'
 OpenSSL::SSL::VERIFY_PEER = OpenSSL::SSL::VERIFY_NONE
 
@@ -12,6 +13,9 @@ class Domoraen
 	class << self
 		attr_accessor :env
 
+		def stream
+		end
+
 		def start
 			@domoraen = Domoraen::Bot.new(
 				config_file: File.dirname(__FILE__) + "/../conf/#{Domoraen.env}.yaml"
@@ -23,6 +27,15 @@ class Domoraen
 			loop do
 				@domoraen.log 'loop start'
 				begin
+					@domoraen.log 'receiving messages'
+					messages = @domoraen.queue.receive_message(:limit => 5)
+					messages.each do |message|
+						@domoraen.log "received: #{message.body}"
+						json = JSON.parse(message.body)
+						@domoraen.client.update("#{json['user']} #{json['text']}", :in_reply_to_status_id => json['status-id'])
+						message.delete
+					end
+
 					if rand(10) == 1
 						@domoraen.log 'tweeting'
 						if text = @domoraen.produce_tool
@@ -57,3 +70,4 @@ require 'domoraen/messenger'
 require 'domoraen/markov'
 require 'domoraen/bot'
 require 'domoraen/cli'
+require 'domoraen/future'
