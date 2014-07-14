@@ -33,10 +33,13 @@ class Domoraen
 					logger.info 'receiving messages'
 					messages = @domoraen.queue.receive_message(:limit => 5)
 					messages.each do |message|
-						logger.info "received: #{message.body}"
-						json = JSON.parse(message.body)
-						@domoraen.client.update("#{json['user']} #{json['text']}", :in_reply_to_status_id => json['status-id'])
-						message.delete
+						begin
+							logger.info "received: #{message.body}"
+							json = JSON.parse(message.body)
+							@domoraen.client.update("#{json['user']} ハイ #{json['text']}#{'!'*(1..3).to_a.sample}", :in_reply_to_status_id => json['status_id'])
+						rescue
+							message.delete
+						end
 					end
 
 					if rand(10) == 1
@@ -48,8 +51,7 @@ class Domoraen
 
 					if rand(2) == 1
 						@domoraen.replies.each do |tweet|
-							text = @domoraen.react_to(tweet)
-							@domoraen.reply("#{@domoraen.tweet_user(tweet)} #{text}", tweet)
+							@domoraen.react_to(tweet)
 						end
 					end
 
