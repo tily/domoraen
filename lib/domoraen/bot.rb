@@ -49,19 +49,19 @@ class Domoraen::Bot < Chatterbot::Bot
 			end
 		when /モダンモード/
 			if @mode == :modern
-				text = "すでにモダンモードで稼働中です"
+				text = "すでにモダンモードで稼働中です #{Time.now.to_i}"
 			else
 				markov.load_chains('hatsumei')
 				@mode = :modern
-				text = "モダンモードに切り替えました"
+				text = "モダンモードに切り替えました #{Time.now.to_i}"
 			end
 		when /クラシックモード/
 			if @mode == :classic
-				text = "すでにクラシックモードで稼働中です"
+				text = "すでにクラシックモードで稼働中です #{Time.now.to_i}"
 			else
 				markov.load_chains('classic')
 				@mode = :classic
-				text = "クラシックモードに切り替えました"
+				text = "クラシックモードに切り替えました #{Time.now.to_i}"
 			end
 		else
 			text = produce_tool_for(tweet[:text])
