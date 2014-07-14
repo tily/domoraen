@@ -16,3 +16,9 @@ https://twitter.com/domoraen
 
 実装中
 
+## TODO
+
+* userstream を使ってリプライを高速化する
+* リプライに対するラップ/サイファー機能、受け取った URL からラップする機能
+* domoraen に対するリプライを蓄積していって何かしたい
+* #domoraen ハッシュタグのリツイート
