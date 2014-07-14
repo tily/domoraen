@@ -1,10 +1,12 @@
 # coding:utf-8
 require 'logger'
 require 'chatterbot'
+require 'domoraen/logger'
 require 'domoraen/producer'
 require 'domoraen/messenger'
 
 class Domoraen::Bot < Chatterbot::Bot
+	include Domoraen::Logger
 	include Domoraen::Producer
 	include Domoraen::Messenger
 
@@ -14,8 +16,6 @@ class Domoraen::Bot < Chatterbot::Bot
 	def initialize(params={})
 		@config_file = params.delete(:config_file)
 		@markov = Domoraen::Markov.new
-		@logger = Logger.new(File.dirname(__FILE__) + "/../../log/#{Domoraen.env}.log", :daily)
-		@logger.level = Logger::DEBUG
 		@mode = :modern
 		super(params)
 	end
@@ -28,12 +28,8 @@ class Domoraen::Bot < Chatterbot::Bot
 		)
 	end
 
-	def log(message, source=nil)
-		@logger.debug(message)
-	end
-
 	def react_to(tweet)
-		log "reply received: #{tweet}"
+		logger.info "reply received: #{tweet}"
 		text = nil
 		case tweet[:text]
 		when /モダンモード/
@@ -55,7 +51,7 @@ class Domoraen::Bot < Chatterbot::Bot
 		else
 			text = produce_tool_for(tweet[:text])
 		end
-		log "reply: #{text}"
+		logger.info "reply: #{text}"
 		text
 	end
 end

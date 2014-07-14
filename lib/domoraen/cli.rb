@@ -7,6 +7,7 @@ require 'json'
 require 'earthquake'
 
 class Domoraen::Cli < Thor
+	include Domoraen::Logger
 	option :save, type: :boolean
 	desc 'classic', 'scrape classic tools and update database'
 	def classic
