@@ -18,3 +18,5 @@ gem "chatterbot"
 gem "thor"
 gem "earthquake"
 gem "daemon-spawn", :require => "daemon_spawn"
+gem "aws-sdk"
+gem 'json'

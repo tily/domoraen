@@ -9,6 +9,9 @@ GEM
       tzinfo (~> 1.1)
     addressable (2.3.6)
     awesome_print (1.2.0)
+    aws-sdk (1.46.0)
+      json (~> 1.4)
+      nokogiri (>= 1.4.4)
     builder (3.2.2)
     chatterbot (0.7.1)
       launchy (>= 2.1.2)
@@ -114,11 +117,13 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  aws-sdk
   bundler (~> 1.0)
   chatterbot
   daemon-spawn
   earthquake
   jeweler (~> 2.0.1)
+  json
   mecab (= 0.98)
   rdoc (~> 3.12)
   rspec (~> 2.8.0)
