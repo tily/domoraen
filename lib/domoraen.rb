@@ -1,5 +1,6 @@
 # coding:utf-8
 
+require 'logger'
 require 'json'
 require 'openssl'
 OpenSSL::SSL::VERIFY_PEER = OpenSSL::SSL::VERIFY_NONE
@@ -9,9 +10,11 @@ class Domoraen
 	VERSION = File.read(File.join File.dirname(__FILE__), '../VERSION').chomp
 
 	@env = ENV['DOMORAEN_ENV'] || 'test'
+	@logger = Logger.new(File.join File.dirname(__FILE__), "../log/#{@env}.log")
 
 	class << self
 		attr_accessor :env
+		attr_accessor :logger
 
 		def stream
 		end
@@ -22,22 +25,22 @@ class Domoraen
 			)
 			@domoraen.markov.load_chains('hatsumei')
 			@domoraen.update_profile
-			@domoraen.log 'starting'
+			logger.info 'starting'
 
 			loop do
-				@domoraen.log 'loop start'
+				logger.info 'loop start'
 				begin
-					@domoraen.log 'receiving messages'
+					logger.info 'receiving messages'
 					messages = @domoraen.queue.receive_message(:limit => 5)
 					messages.each do |message|
-						@domoraen.log "received: #{message.body}"
+						logger.info "received: #{message.body}"
 						json = JSON.parse(message.body)
 						@domoraen.client.update("#{json['user']} #{json['text']}", :in_reply_to_status_id => json['status-id'])
 						message.delete
 					end
 
 					if rand(10) == 1
-						@domoraen.log 'tweeting'
+						logger.info 'tweeting'
 						if text = @domoraen.produce_tool
 							@domoraen.tweet(text)
 						end
@@ -52,12 +55,12 @@ class Domoraen
 
 					@domoraen.update_config
 				rescue Exception => e
-					@domoraen.log e
+					logger.error e
 					@domoraen.tweet "@tily #{e.class}: #{e.message}"
 					next
 				end
 
-				@domoraen.log 'loop end'
+				logger.info 'loop end'
 				sleep 60
 			end
 		end
