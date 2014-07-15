@@ -20,7 +20,7 @@ class Domoraen
 		TIME_REGEXP = <<-'EOR'
 			(?<time>
 				(?<hour>\d{1,2})\:(?<minute>\d{1,2}) |
-				(?<hour>\d{1,2})\s?時\s?((?<minute>\d{1,2})\s?分) |
+				(?<hour>\d{1,2})\s?時\s?((?<minute>\d{1,2})\s?分)? |
 				(?<time_japanese>未明|早朝|朝|お?昼|正午|おやつの時間|夕方|夜|深夜)
 			)
 		EOR
