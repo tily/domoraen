@@ -53,6 +53,9 @@ class Domoraen
 
 					if rand(2) == 1
 						@domoraen.replies.each do |tweet|
+							if tweet.user.screen_name == "domoraen"
+								logger.warn 'self reply detected. skipping ...'
+							end
 							@domoraen.react_to(tweet)
 						end
 					end
