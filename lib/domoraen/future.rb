@@ -102,7 +102,7 @@ class Domoraen
 					else
 						date = today
 						if Time.parse("#{hour}:#{minute}") - Time.now <= 0
-							date = date.next_year
+							date += 1
 						end
 						year, month, day = date.year, date.month, date.day
 					end
