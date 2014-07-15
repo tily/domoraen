@@ -14,7 +14,7 @@ https://twitter.com/domoraen
 
 ### 遅延エコー機能
 
-<img src="http://i.gyazo.com/4dffd7b0ad0d2d9cc9c75636c4687236.png">
+<img src="http://i.gyazo.com/66c3e26d1ffddaba41f6f99143605e4f.png">
 
 下記のようなツイートを送ることで、指定した時間にオウム返しの返事をさせることができます。
 
