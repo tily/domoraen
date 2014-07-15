@@ -36,8 +36,10 @@ class Domoraen
 						begin
 							logger.info "received: #{message.body}"
 							json = JSON.parse(message.body)
-							@domoraen.client.update("#{json['user']} ハイ #{json['text']}#{'!'*(1..3).to_a.sample}", :in_reply_to_status_id => json['status_id'])
-						rescue
+							@domoraen.client.update("#{json['user']} ハイ 「#{json['text']}」#{'!'*(1..3).to_a.sample}", :in_reply_to_status_id => json['status_id'])
+						rescue StandardError => e
+							logger.info "#{e.class}: #{e.message}"
+						ensure
 							message.delete
 						end
 					end

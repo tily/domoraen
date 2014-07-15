@@ -24,13 +24,14 @@ class Domoraen
 				(?<time_japanese>未明|早朝|朝|お?昼|正午|おやつの時間|夕方|夜|深夜)
 			)
 		EOR
+		# TODO: 今?週末
 		REGEXP =  /
 			(
 				#{AFTER_REGEXP} |
 				#{DAY_IN_WEEK_REGEXP}(の|\s)?#{TIME_REGEXP}? |
 				#{DATE_REGEXP}\s?#{TIME_REGEXP}? |
 				#{TIME_REGEXP}
-			)\s?に、?(?<echo>.+)
+			)\s?に?、?「(?<echo>.+)」
 		/x
 	
 		class << self
