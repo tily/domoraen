@@ -10,6 +10,9 @@ module Domoraen::Messenger
 	end
 
 	def queue
-		@queue ||= sqs.queues.create(@config[:messenger][:queue_name])
+		@queue ||= sqs.queues.create(
+			@config[:messenger][:queue_name],
+			message_retention_period: 60*60*24*14
+		)
 	end
 end
