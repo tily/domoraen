@@ -9,7 +9,7 @@ class Domoraen
 	SLEEP = 60
 	VERSION = File.read(File.join File.dirname(__FILE__), '../VERSION').chomp
 
-	@env = ENV['DOMORAEN_ENV'] || 'test'
+	@env = ENV['DOMORAENV'] || 'test'
 	@logger = Logger.new(File.join File.dirname(__FILE__), "../log/#{@env}.log")
 
 	class << self
