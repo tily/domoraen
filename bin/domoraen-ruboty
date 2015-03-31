@@ -1,0 +1,46 @@
+#!ruby
+# coding:utf-8
+File.join(File.dirname(__FILE__), '..', 'lib').tap {|x| $:.unshift(x) unless $:.include?(x) }
+require 'domoraen'
+
+module Ruboty
+  module Handlers
+    class Domoraen < Base
+      include ::Domoraen::Producer
+      include ::Domoraen::Messenger
+
+      attr_accessor :markov
+
+      def initialize(robot)
+        super(robot)
+        @markov = ::Domoraen::Markov.new
+        @markov.load_chains('hatsumei')
+
+	@thread = Thread.new do
+          loop do
+            robot.say body: produce_tool, original: {tweet: nil}
+            sleep sleep_minutes
+          end
+	end.run
+      end
+
+      on(
+        /.*/,
+        name: 'produce_item',
+        description: 'produce item',
+      )
+
+      def produce_item(message)
+        message.reply produce_tool_for(message.body)
+      end
+
+      private
+
+      def sleep_minutes
+        max = (ENV['DOMORAEN_MAX_SLEEP_MINUTES'] || 10).to_i
+        min = (ENV['DOMORAEN_MIN_SLEEP_MINUTES'] || 30).to_i
+	(max..min).to_a.sample
+      end
+    end
+  end
+end
