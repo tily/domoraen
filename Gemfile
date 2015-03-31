@@ -13,7 +13,7 @@ group :development do
   gem "simplecov", ">= 0"
 end
 
-gem "mecab", "0.98"
+#gem "mecab", "0.98"
 gem "chatterbot"
 gem "thor"
 gem "earthquake"
@@ -21,3 +21,5 @@ gem "daemon-spawn", :require => "daemon_spawn"
 gem "aws-sdk"
 gem "json"
 gem "sinatra"
+gem "ruboty"
+gem 'httparty'
