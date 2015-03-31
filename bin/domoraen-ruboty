@@ -18,7 +18,9 @@ module Ruboty
 
 	@thread = Thread.new do
           loop do
-            robot.say body: produce_tool, original: {tweet: nil}
+            if tool = produce_tool
+              robot.say body: tool, original: {tweet: nil}
+	    end
             sleep sleep_minutes
           end
 	end.run
