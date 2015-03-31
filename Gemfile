@@ -14,7 +14,7 @@ group :development do
 end
 
 #gem "mecab", "0.98"
-gem "chatterbot"
+#gem "chatterbot"
 gem "thor"
 gem "earthquake"
 gem "daemon-spawn", :require => "daemon_spawn"
