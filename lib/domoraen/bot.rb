@@ -1,6 +1,6 @@
 # coding:utf-8
 require 'logger'
-require 'chatterbot'
+#require 'chatterbot'
 require 'domoraen/logger'
 require 'domoraen/producer'
 require 'domoraen/messenger'
