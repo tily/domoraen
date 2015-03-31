@@ -76,7 +76,7 @@ class Domoraen
 	end
 end
 
-require 'chatterbot'
+#require 'chatterbot'
 require 'domoraen/producer'
 require 'domoraen/messenger'
 require 'domoraen/markov'
