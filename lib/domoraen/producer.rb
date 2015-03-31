@@ -13,7 +13,7 @@ module Domoraen::Producer
 	end
 
 	def produce_tool_for(text)
-		words = function_words(text)
+		words = Domoraen::MorphAnalysis.new.func_words(text)
 		tools = words.map {|word| @markov.generate(word) }.compact
 		return NOES.sample if tools.empty? || tools.nil?
 		prefix + tools.sample + suffix

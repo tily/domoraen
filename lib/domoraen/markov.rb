@@ -1,5 +1,5 @@
 # coding:utf-8
-require 'mecab'
+#require 'mecab'
 
 class Domoraen::Markov
 	def db_path(name)
