@@ -80,7 +80,7 @@ end
 require 'domoraen/producer'
 require 'domoraen/messenger'
 require 'domoraen/markov'
-require 'domoraen/bot'
+#require 'domoraen/bot'
 require 'domoraen/cli'
 require 'domoraen/future'
 require 'domoraen/morph_analysis'
