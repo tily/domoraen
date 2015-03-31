@@ -22,4 +22,5 @@ gem "aws-sdk"
 gem "json"
 gem "sinatra"
 gem "ruboty"
+gem "ruboty-twitter"
 gem 'httparty'
