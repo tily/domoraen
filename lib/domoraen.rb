@@ -10,7 +10,8 @@ class Domoraen
 	VERSION = File.read(File.join File.dirname(__FILE__), '../VERSION').chomp
 
 	@env = ENV['DOMORAENV'] || 'test'
-	@logger = Logger.new(File.join File.dirname(__FILE__), "../log/#{@env}.log")
+	#@logger = Logger.new(File.join File.dirname(__FILE__), "../log/#{@env}.log")
+	@logger = Logger.new(STDOUT)
 
 	class << self
 		attr_accessor :env
