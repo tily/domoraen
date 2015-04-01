@@ -39,8 +39,8 @@ module Ruboty
       private
 
       def sleep_minutes
-        max = (ENV['DOMORAEN_MAX_SLEEP_MINUTES'] || 10).to_i * 60
-        min = (ENV['DOMORAEN_MIN_SLEEP_MINUTES'] || 30).to_i * 60
+        max = (ENV['DOMORAEN_MAX_SLEEP_MINUTES'] || 5).to_i * 60
+        min = (ENV['DOMORAEN_MIN_SLEEP_MINUTES'] || 15).to_i * 60
 	(max..min).to_a.sample
       end
     end
