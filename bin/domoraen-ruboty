@@ -14,7 +14,7 @@ module Ruboty
       def initialize(robot)
         super(robot)
         @markov = ::Domoraen::Markov.new
-        @markov.load_chains('hatsumei')
+        @markov.load_chains(ENV['DOMORAEN_MARKOV_MODE'] || 'hatsumei')
 
 	@thread = Thread.new do
           loop do
