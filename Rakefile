@@ -11,6 +11,14 @@ rescue Bundler::BundlerError => e
 end
 require 'rake'
 
+require "bundler/gem_tasks"
+require "rspec/core/rake_task"
+
+RSpec::Core::RakeTask.new(:spec)
+
+task :default => :spec
+
+
 #require 'jeweler'
 #Jeweler::Tasks.new do |gem|
 #  # gem is a Gem::Specification... see http://guides.rubygems.org/specification-reference/ for more options
